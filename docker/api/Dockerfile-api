@@ -1,0 +1,13 @@
+FROM golang:1.13.6-alpine
+
+ENV GO111MODULE=on
+
+WORKDIR /go/src/app/
+
+COPY src/app /go/src/app
+
+RUN apk add --no-cache --virtual alpine-sdk git \
+    && go mod download \
+    && go get github.com/pilu/fresh
+
+CMD ["fresh"]

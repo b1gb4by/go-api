@@ -1,0 +1,27 @@
+version: '3.7'
+services:
+  api:
+    build:
+      context: .
+      dockerfile: ./docker/api/Dockerfile-api
+    container_name: sample_project-api
+    image: sample_project/api:0.1.0
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./src/app:/go/src/app
+    depends_on:
+      - redis
+    tty: true
+
+  redis:
+    build:
+      context: .
+      dockerfile: ./docker/database/Dockerfile-database
+    container_name: sample_project-redis
+    image: sample_project/redis:0.1.0
+    ports:
+      - "6379:6379"
+    restart: always
+    volumes:
+      - ./docker/database:/data

@@ -1,0 +1,5 @@
+.idea
+
+docker/database/dsump.rdb
+
+src/app/tmp/*
