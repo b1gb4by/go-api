@@ -1,17 +1,20 @@
-# Base Image
+# Base image
 FROM golang:1.14-alpine
 
-# Specify Work Diectory
+# Specify work diectory
 WORKDIR /go/src/app/
 
 # Modules file allocation settings
-COPY app/go.mod ./
-COPY app/go.sum ./
+COPY src/app/go.mod ./
+COPY src/app/go.sum ./
 
+# Install required packages
 RUN apk update \
     && apk add --no-cache git \
         alpine-sdk \
     && go get -u github.com/cosmtrek/air \
     && go mod download
 
-CMD ["air", "main.go"]
+# Default settings at conatiner startup
+# Hot reload settings
+CMD ["air"]
