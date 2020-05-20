@@ -3,9 +3,9 @@ services:
   api:
     build:
       context: .
-      dockerfile: ./docker/api/Dockerfile-api
-    container_name: sample_project-api
-    image: sample_project/api:0.1.0
+      dockerfile: ./docker/app/Dockerfile-app
+    container_name: sample_project-app
+    image: sample_project/app:0.1.0
     ports:
       - "8080:8080"
     volumes:
@@ -17,9 +17,9 @@ services:
   redis:
     build:
       context: .
-      dockerfile: ./docker/database/Dockerfile-database
-    container_name: sample_project-redis
-    image: sample_project/redis:0.1.0
+      dockerfile: ./docker/database/Dockerfile-db
+    container_name: sample_project-db
+    image: sample_project/db:0.1.0
     ports:
       - "6379:6379"
     restart: always
