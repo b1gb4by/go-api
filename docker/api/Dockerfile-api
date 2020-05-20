@@ -1,13 +1,17 @@
-FROM golang:1.13.6-alpine
+# Base Image
+FROM golang:1.14-alpine
 
-ENV GO111MODULE=on
-
+# Specify Work Diectory
 WORKDIR /go/src/app/
 
-COPY src/app /go/src/app
+# Modules file allocation settings
+COPY app/go.mod ./
+COPY app/go.sum ./
 
-RUN apk add --no-cache --virtual alpine-sdk git \
-    && go mod download \
-    && go get github.com/pilu/fresh
+RUN apk update \
+    && apk add --no-cache git \
+        alpine-sdk \
+    && go get -u github.com/cosmtrek/air \
+    && go mod download
 
-CMD ["fresh"]
+CMD ["air", "main.go"]
