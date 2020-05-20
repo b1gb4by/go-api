@@ -1,4 +1,5 @@
 version: '3.7'
+
 services:
   api:
     build:
@@ -17,7 +18,7 @@ services:
   redis:
     build:
       context: .
-      dockerfile: ./docker/database/Dockerfile-db
+      dockerfile: ./docker/db/Dockerfile-db
     container_name: sample_project-db
     image: sample_project/db:0.1.0
     ports:
