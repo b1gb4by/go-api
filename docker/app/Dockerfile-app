@@ -1,5 +1,8 @@
+###############################
+# Builder Container
+###############################
 # Base image
-FROM golang:1.14-alpine
+FROM golang:1.14.3-alpine as builder
 
 # Specify work diectory
 WORKDIR /go/src/app/
@@ -18,3 +21,24 @@ RUN apk update \
 # Default settings at conatiner startup
 # Hot reload settings
 CMD ["air"]
+
+###############################
+# Production Container
+###############################
+FROM alpine:latest as production
+
+RUN apk --no-cache add ca-certificates
+
+ARG APP_USER_NAME='sample-user'
+ARG APP_USER_GROUP=$APP_USER_NAME
+
+RUN addgroup -S $APP_USER_NAME \
+    && adduser -S $APP_USER_NAME -G $APP_USER_GROUP \
+    && echo $APP_USER_NAME ALL=\(ALL\) NOPASSWD:ALL > /etc/sudoers \
+    && echo $APP_USER_NAME:$APP_USER_GROUP | chpasswd
+
+COPY --from=builder --chown=$APP_USER_NAME:$APP_USER_GROUP /go/src/app/main /app
+
+USER $APP_USER_NAME
+
+CMD ["/app"]
