@@ -4,13 +4,14 @@ services:
   api:
     build:
       context: .
+      target: builder
       dockerfile: ./docker/app/Dockerfile-app
     container_name: sample_project-app
     image: sample_project/app:0.1.0
     ports:
       - "8080:8080"
     volumes:
-      - ./src/app:/go/src/app
+      - "./app:/go/src/app"
     depends_on:
       - redis
     tty: true
@@ -25,4 +26,4 @@ services:
       - "6379:6379"
     restart: always
     volumes:
-      - ./docker/database:/data
+      - "./docker/database:/data"
