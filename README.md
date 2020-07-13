@@ -33,7 +33,7 @@ Sample API code for Go.
     * [Document](https://redis.io/documentation)
 
 ### Hot Reload
-* [cosmtrek/air](ttps://github.com/cosmtrek/air)
+* [cosmtrek/air](https://github.com/cosmtrek/air)
 
 ### ORM
 * [gomodule/redigo](https://github.com/gomodule/redigo)
